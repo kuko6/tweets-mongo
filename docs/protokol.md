@@ -6,7 +6,7 @@ Jakub Povinec
 
 ----
 
-(tento protokol som písal ako markdown a teda export do pdf nie je ideálny. Originál je v `docs/protokol.md` alebo na [githube](https://github.com/kuko6/tweets-mongo/blob/main/docs/protokol.md))
+(tento protokol som písal ako markdown a teda export do pdf nie je ideálny. Odporúčam radšej originál, ktorý je v `docs/protokol.md` a taktiež aj na `docs/protokol.md` alebo na [githube](https://github.com/kuko6/tweets-mongo/blob/main/docs/protokol.md))
 
 ## Úloha 1
 
@@ -318,7 +318,7 @@ Celý výstup je v `outputs/uloha3_a.json`.
 {
   "_id": "1496988583009603587",
   "author_id": "1495377954045665283",
-  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Ukrainian soldiers on Snake Island were all killed because they refused to surrender. Our soldiers on Snake Island died fighting heroically.\"\n\n#Ukraine #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaUkraineConflict https://t.co/vxbA7dmqXm",
+  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Ukrainian soldiers on Snake Island were all killed because they refused to surrender. Our soldiers on Snake Island died fighting heroically."\n\n#Ukraine #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaUkraineConflict https://t.co/vxbA7dmqXm",
   "author": [
     {
       "username": "Newnews_eu"
@@ -340,7 +340,7 @@ Celý výstup je v `outputs/uloha3_a.json`.
 {
   "_id": "1496985447423045648",
   "author_id": "1495377954045665283",
-  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Today I asked 27 European leaders whether Ukraine will join NATO, I directly asked. Everyone is afraid. They are not answering.\"\n\n#Ukraine #Ukraina #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaInvadedUkraine https://t.co/QK17mXrWfy",
+  "content": "⚠️#BREAKING | President of Ukraine Zelensky: "Today I asked 27 European leaders whether Ukraine will join NATO, I directly asked. Everyone is afraid. They are not answering.\"\n\n#Ukraine #Ukraina #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaInvadedUkraine https://t.co/QK17mXrWfy",
   "author": [
     {
       "username": "Newnews_eu"
