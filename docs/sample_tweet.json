@@ -1,65 +1,94 @@
 {
-    "_id": "1496682988486414347",
-    "author_id": "846391998",
-    "content": "This is key - its a direct threat to #NATO of a #Russian military response against NATO, including the implicit threat of use of #nuclear weapons. https://t.co/JrXUsmtNqZ",
-    "possibly_sensitive": false,
-    "language": "en",
-    "source": "Twitter Web App",
-    "retweet_count": 9,
-    "reply_count": 1,
-    "like_count": 13,
-    "quote_count": 2,
-    "created_at": {
-      "$date": {
-        "$numberLong": "1645672006000"
+  "_id": "1496682988486414347",
+  "author_id": "846391998",
+  "content": "This is key - its a direct threat to #NATO of a #Russian military response against NATO, including the implicit threat of use of #nuclear weapons. https://t.co/JrXUsmtNqZ",
+  "possibly_sensitive": false,
+  "language": "en",
+  "source": "Twitter Web App",
+  "retweet_count": 9,
+  "reply_count": 1,
+  "like_count": 13,
+  "quote_count": 2,
+  "created_at": {
+    "$date": {
+      "$numberLong": "1645672006000"
+    }
+  },
+  "context_annotations": [
+    {
+      "entity": {
+        "name": "North Atlantic Treaty Organization",
+        "description": "North Atlantic Treaty Organization"
+      },
+      "domain": {
+        "name": "Political Body",
+        "description": "A section of a government, like The Supreme Court"
       }
     },
-    "context_annotations": [
-      {
-        "entity": {
-          "name": "North Atlantic Treaty Organization",
-          "description": "North Atlantic Treaty Organization"
-        },
-        "domain": {
-          "name": "Political Body",
-          "description": "A section of a government, like The Supreme Court"
-        }
-      },
-      {
-        "entity": {
-          "name": "Russo-Ukrainian conflict",
-          "description": null
-        },
-        "domain": {
-          "name": "Ongoing News Story",
-          "description": "Ongoing News Stories like 'Brexit'"
-        }
-      },
-      ...
-    ],
-    "conversation_hashtags": [
-      "NATO",
-      "Russian",
-      "nuclear"
-    ],
-    "annotations": [
-      {
-        "value": "NATO",
-        "probability": 0.714,
-        "type": "Organization"
-      }
-    ],
-    "links": [
-      {
-        "url": "https://twitter.com/samagreene/status/1496679943689883649",
-        "title": null,
+    {
+      "entity": {
+        "name": "Russo-Ukrainian conflict",
         "description": null
+      },
+      "domain": {
+        "name": "Ongoing News Story",
+        "description": "Ongoing News Stories like 'Brexit'"
       }
-    ],
-    "conversation_references": [
-      {
-        "type": "quoted",
-        "id": "1496679943689883649"
+    },
+    {
+      "entity": {
+        "name": "Politics",
+        "description": "Politics"
+      },
+      "domain": {
+        "name": "Unified Twitter Taxonomy",
+        "description": "A taxonomy view into the Semantic Core knowledge graph"
       }
-    ]
-  }
+    },
+    {
+      "entity": {
+        "name": "North Atlantic Treaty Organization",
+        "description": "North Atlantic Treaty Organization"
+      },
+      "domain": {
+        "name": "Unified Twitter Taxonomy",
+        "description": "A taxonomy view into the Semantic Core knowledge graph"
+      }
+    },
+    {
+      "entity": {
+        "name": "Government institutions",
+        "description": "Political Body"
+      },
+      "domain": {
+        "name": "Unified Twitter Taxonomy",
+        "description": "A taxonomy view into the Semantic Core knowledge graph"
+      }
+    }
+  ],
+  "conversation_hashtags": [
+    "NATO",
+    "Russian",
+    "nuclear"
+  ],
+  "annotations": [
+    {
+      "value": "NATO",
+      "probability": 0.714,
+      "type": "Organization"
+    }
+  ],
+  "links": [
+    {
+      "url": "https://twitter.com/samagreene/status/1496679943689883649",
+      "title": null,
+      "description": null
+    }
+  ],
+  "conversation_references": [
+    {
+      "type": "quoted",
+      "id": "1496679943689883649"
+    }
+  ]
+}

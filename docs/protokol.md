@@ -10,15 +10,16 @@ Jakub Povinec
 
 ## Úloha 1
 
-Môj databázový model obsahuje 2 kolekcie - **Authors** a **Tweets**. Tieto objekty som sa rozhodol rozdeliť, pretože k autorovi zvyčajne patrí veľké množstvo tweetov a teda sa neoplatí aby boli tieto dokumenty vnorené.
+Môj dátový model obsahuje 2 kolekcie - **Authors** a **Tweets**. Tieto objekty som sa rozhodol rozdeliť, pretože k autorovi zvyčajne patrí veľké množstvo tweetov a teda sa neoplatí aby boli tieto dokumenty vnorené.
 
-Dokumenty majú medzi sebou teda vzťah **one-to-many** s tým, že dokument tweetu obsahuje referenciu na autora. Druhá možnosť by bola aby samotný autor obsahoval list odkazov na jeho tweety, čo by ale podľa mňa nebolo ideálne, keďže používatelia majú na Twittery bežne veľké množstvo tweetov, ktoré sa taktiež pomerne často zväčšuje a aj podľa [mongodb dokumentácie](https://www.mongodb.com/docs/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/) je v takomto prípade lepšie uchovávať referenciu v druhom dokumente. V tomto prípade je stále jednoduché nájsť tweety prislúchajúce danému autorovi.
+Dokumenty majú medzi sebou vzťah **one-to-many** s tým, že dokument tweetu obsahuje referenciu na autora. Druhá možnosť by bola aby samotný autor obsahoval list odkazov na jeho tweety, čo by ale podľa mňa nebolo ideálne, keďže používatelia majú na Twittery bežne veľké množstvo tweetov, ktoré sa taktiež pomerne často zväčšuje a aj podľa [mongodb dokumentácie](https://www.mongodb.com/docs/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/) je v takomto prípade lepšie uchovávať referenciu v druhom dokumente. V tomto prípade je stále jednoduché nájsť tweety prislúchajúce danému autorovi.
 
 ## Dokument Author
 
 Tento dokument obsahuje rovnaké polia ako tabuľka `authors` v postgresql:
 
-- `_id` - unikátny identifikátor autora, rovnaký ako v postgresql
+- `_id` - unikátny identifikátor autora, ktorý je uložený ako `string` namiesto `int64`
+   - hodnota je ale rovnaká ako v postgresql
 - `name` uložený ako `string`
 - `username` uložený ako `string`
 - `description` uložený ako `string`
@@ -29,14 +30,14 @@ Tento dokument obsahuje rovnaké polia ako tabuľka `authors` v postgresql:
 
 ```json
 {
-  "_id": "257367223",
-  "name": "Gabriel Gatehouse",
-  "username": "ggatehouse",
-  "description": "Former BBC Foreign Correspondent. Teller of stories short and long.",
-  "followers_count": 52882,
-  "following_count": 2217,
-  "tweet_count": 10128,
-  "listed_count": 1128
+  "_id": "846391998",
+  "name": "Dr. Malcolm Davis",
+  "username": "Dr_M_Davis",
+  "description": "Senior Analyst - Australian Strategic Policy Institute - focus on Defence Strategy and Capability issues including Space Policy and Space Security",
+  "followers_count": 10525,
+  "following_count": 7830,
+  "tweet_count": 19949,
+  "listed_count": 204
 }
 ```
 
@@ -44,7 +45,8 @@ Tento dokument obsahuje rovnaké polia ako tabuľka `authors` v postgresql:
 
 Dokument pre tweety taktiež obsahuje do veľkej miery rovnaké polia ako tabuľka `conversations` v postgresql:
 
-- `_id` - unikátny identifikátor tweetu, rovnaký ako v postgresql
+- `_id` - unikátny identifikátor tweetu, ktorý je uložený ako `string` namiesto `int64`
+   - hodnota je ale rovnaká ako v postgresql
 - `author_id` referencia na authora tweetu (vzťah **many-to-one**)
 - `content` uložený ako `string`
 - `possibly_sensitive` uložený ako `bool`
@@ -56,20 +58,20 @@ Dokument pre tweety taktiež obsahuje do veľkej miery rovnaké polia ako tabuľ
 - `quote_count` uložený ako `int`
 - `created_at` uložený ako `timestamp`
 - `hashtags` uložený ako `list` stringov (hashtagov)
-   - aj keď tweety môžu mať viac hashtagov, v tomto prípade sa ich neoplatí mať v samostatnej kolekcií, keďže ich je väčšinou len niekoľko
+   - aj keď tweety môžu mať viac hashtagov, ktoré môžu byť rovnaké pre viaceré tweety, v tomto prípade sa ich neoplatí mať v samostatnej kolekcií, keďže ich je väčšinou len niekoľko
    - v tomto prípade je to vzťah **one-to-few**
 - `links` uložený ako `list` objektov reprezentujúce odkazy (nazov, popis a url)
    - rovnako ako pri hashtagoch aj toto je vzťah **one-to-few**
 - `context_annotations` uložený ako `list` objektov, ktoré obsahujú ďalšie dva objekty (`entity` a `domain`), kde každý má meno a popis
    - objekty `entity` aj `domain` môžu byť rovnaké vo viacerých tweetoch
    - na rozdiel od vzťahu medzi autormi a tweetmi sa v tomto prípade neoplatí tieto dokumenty rozdelovať, pretože aj keď ich môže byť veľké množstvo ich počet sa nemení
-   - vzťah **one-to-many** alebo **one-to-few**
+   - vzťah **one-to-few**
 - `annotations` uložený ako `list` objektov reprezentujúcich anotácie
    - anotácie sú jedinečné pre každý tweet
    - vzťah **one-to-few**
 - `conversation_references` uložený ako `list` objektov reprezentujúcich referencie
    - každý objekt obsahuje typ referencie a `_id` referencovaného tweetu
-   - vzťah **one-to-many** alebo **one-to-few**
+   - vzťah **one-to-many**
 
 ```json
 {
@@ -97,16 +99,6 @@ Dokument pre tweety taktiež obsahuje do veľkej miery rovnaké polia ako tabuľ
       "domain": {
         "name": "Political Body",
         "description": "A section of a government, like The Supreme Court"
-      }
-    },
-    {
-      "entity": {
-        "name": "Russo-Ukrainian conflict",
-        "description": null
-      },
-      "domain": {
-        "name": "Ongoing News Story",
-        "description": "Ongoing News Stories like 'Brexit'"
       }
     },
     ...
@@ -153,7 +145,7 @@ docker run \
 
 ### Importovanie dát
 
-Na denormalizovanie dát z postgresql som použil viacmenej rovnaké sql ako v 5. zadaní. Jediný rozdiel je hlavne v použití podmienky na vyfiltrovanie tweetov z 24.2.2022 a v `conversation_references`, z ktorých ma v tomto prípade zaujímal iba typ a id referencovaného tweetu. Taktiež som zmenil `id` tweetu, autora a referencovaného tweetu na `text`, keďže s pôvodnými hodnotami som mal problém pri vyhľadávaní.
+Na denormalizovanie dát z postgresql som použil viacmenej rovnaké sql ako v 5. zadaní. Jediný rozdiel je hlavne v použití podmienky na vyfiltrovanie tweetov z **24.2.2022** a v `conversation_references`, z ktorých ma v tomto prípade zaujímal iba typ a id referencovaného tweetu. Taktiež som zmenil `id` tweetu, autora a referencovaného tweetu na `text`, keďže s pôvodnými hodnotami som mal problém pri vyhľadávaní.
 
 ```sql
 SELECT 
@@ -209,7 +201,7 @@ LEFT JOIN (
 WHERE timezone('UTC', c.created_at)::date = '2022-02-24';
 ```
 
-Táto query vráti celkovo 1,924,682 záznamov.
+Táto query vráti celkovo 1 924 682 záznamov.
 
 Dáta som do mongodb importoval cez python skript. Tento skript spočíval v tom, že sa po 10000 vyberali z postgresql (pomocou `cursor.fetchmany(10000)`) záznamy, ktoré sa následne pomocou `collection.insert_many(data)` zapísali do mongo. Keďže sú oba dokumenty obsiahnuté v jednom riadku, bolo taktiež potrebné jednotlivé riadky prejsť a oddeliť autora od tweetu, na čo stačilo použiť len metódu `pop()`, keďže autor už bol uložený ako json.
 
@@ -223,7 +215,7 @@ def main():
     authors = mongo_db['authors']
 
     conn = psycopg.connect(host='127.0.0.1', dbname='pdt', user='mac', password='', row_factory=dict_row)
-    cur = fetch_postgres(conn)
+    cur = query_data(conn)
     
     authors_data = []
     inserted_authors = set()
@@ -296,7 +288,7 @@ db.tweets.aggregate([
 ])
 ```
 
-### Prvých 5 tweetov
+### Prvých 5 tweetov pre časť a
 
 Celý výstup je v `outputs/uloha3_a.json`.
 
@@ -326,7 +318,7 @@ Celý výstup je v `outputs/uloha3_a.json`.
 {
   "_id": "1496988583009603587",
   "author_id": "1495377954045665283",
-  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Ukrainian soldiers on Snake Island were all killed because they refused to surrender. Our soldiers on Snake Island died fighting heroically."\n\n#Ukraine #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaUkraineConflict https://t.co/vxbA7dmqXm",
+  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Ukrainian soldiers on Snake Island were all killed because they refused to surrender. Our soldiers on Snake Island died fighting heroically.\"\n\n#Ukraine #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaUkraineConflict https://t.co/vxbA7dmqXm",
   "author": [
     {
       "username": "Newnews_eu"
@@ -348,7 +340,7 @@ Celý výstup je v `outputs/uloha3_a.json`.
 {
   "_id": "1496985447423045648",
   "author_id": "1495377954045665283",
-  "content": "⚠️#BREAKING | President of Ukraine Zelensky: "Today I asked 27 European leaders whether Ukraine will join NATO, I directly asked. Everyone is afraid. They are not answering.\"\n\n#Ukraine #Ukraina #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaInvadedUkraine https://t.co/QK17mXrWfy",
+  "content": "⚠️#BREAKING | President of Ukraine Zelensky: \"Today I asked 27 European leaders whether Ukraine will join NATO, I directly asked. Everyone is afraid. They are not answering.\"\n\n#Ukraine #Ukraina #UkraineRussie #worldwar3 #NoWar #nowarinukraine #RussiaInvadedUkraine https://t.co/QK17mXrWfy",
   "author": [
     {
       "username": "Newnews_eu"
@@ -360,7 +352,7 @@ Celý výstup je v `outputs/uloha3_a.json`.
 
 ### Časť b - vypíše posledných 10 retweetov pre tweet, ktorý má id 1496830803736731649
 
-V tomto prípade stačí len pomocou match vybrať tweety, ktoré majú v poli `conversation_references`, id vybraného tweetu a daná referencia je typu `retweeted`. Ďalej je už tento dopyt rovnaký ako predchádzajúci.
+V tomto prípade stačí len pomocou `match` vybrať tweety, ktoré majú v poli `conversation_references`, id vybraného tweetu a daná referencia je typu `retweeted`. Ďalej je už tento dopyt rovnaký ako ten predchádzajúci.
 
 ```javascript
 db.tweets.aggregate([
@@ -391,7 +383,7 @@ db.tweets.aggregate([
 ])
 ```
 
-### Prvých 5 tweetov
+### Prvých 5 tweetov pre časť b
 
 Celý výstup je v `outputs/uloha3_b.json`.
 

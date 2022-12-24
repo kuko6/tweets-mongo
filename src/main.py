@@ -1,11 +1,10 @@
-import pymongo
 from pymongo import MongoClient
 import psycopg
 from psycopg.rows import dict_row
 import time
 
 
-def fetch_postgres(conn: psycopg.Connection) -> psycopg.ServerCursor:
+def query_data(conn: psycopg.Connection) -> psycopg.ServerCursor:
     """ Create cursor and execute the query """
 
     cur = conn.cursor(name='tweets')
@@ -73,7 +72,7 @@ def main():
     authors = mongo_db['authors']
 
     conn = psycopg.connect(host='127.0.0.1', dbname='pdt', user='mac', password='', row_factory=dict_row)
-    cur = fetch_postgres(conn)
+    cur = query_data(conn)
     
     start_time = time.time()
     processed_rows = 0
@@ -81,10 +80,14 @@ def main():
     authors_data = []
     inserted_authors = set()
     tweets_data = []
+    
+    # Iterate over batches and insert them into mongo
     while True:
         rows = cur.fetchmany(10000)
         if len(rows) == 0: break
 
+        # Iterate through the fetched rows and extract the author json, 
+        # since the author document is in the same row as the tweet
         for row in rows:
             author = row.pop('author')
             tweet = row
