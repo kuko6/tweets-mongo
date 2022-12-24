@@ -6,7 +6,7 @@ Jakub Povinec
 
 ----
 
-(tento protokol som písal ako markdown a teda export do pdf nie je ideálny. Originál je v `docs/protokol.md` alebo na githube)
+(tento protokol som písal ako markdown a teda export do pdf nie je ideálny. Originál je v `docs/protokol.md` alebo na [githube](https://github.com/kuko6/tweets-mongo/blob/main/docs/protokol.md))
 
 ## Úloha 1
 
