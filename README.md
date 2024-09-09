@@ -1,7 +1,7 @@
 # Mongo tweets
 
 This repository includes: 
-- python scripts and sql queries used for exporting postgres database of tweets and importing them into mongo
+- python scripts and sql queries used for denormalizing and exporting postgres database of tweets and importing them into mongodb
 
 ## Usage
 
